@@ -16,5 +16,8 @@ public class Merchant : Villager
     // Have you heard of the High Elves? Haah, Burgh, Hrmhf (dead from poison apple)
     // (ignore this nonsense above I'm just being silly)
 
-
+    public override ChestType CanOpen()
+    {
+        return ChestType.Merchant;
+    }
 }
