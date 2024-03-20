@@ -10,7 +10,8 @@ public class BuildingScript : MonoBehaviour
     public SpriteRenderer gravestoneSr;
 
 
-    public float interpolation = 1f;
+    public float interpolation = 0f;
+    public float interpolationTarget = 2f;
 
     public void Start()
     {
@@ -19,17 +20,35 @@ public class BuildingScript : MonoBehaviour
 
     IEnumerator building()
     {
-        print(pumpkinSr.gameObject.transform.localScale);
-            pumpkinSr.gameObject.transform.localScale = Vector3.Lerp(new Vector3(0, 0, 0), new Vector3(1, 1, 1), interpolation * Time.deltaTime);
+        
+        while (interpolation < interpolationTarget)
+        {
+            pumpkinSr.gameObject.transform.localScale = Vector3.Lerp(pumpkinSr.gameObject.transform.localScale, new Vector3(1, 1, 1), (interpolation / interpolationTarget));
+            interpolation += 1 * Time.deltaTime;
+            yield return null;
+        }
 
         yield return new WaitForSeconds(1.0f);
 
-        scarecrowSr.gameObject.transform.localScale = Vector3.Lerp(scarecrowSr.gameObject.transform.localScale, new Vector3(1, 1, 1), interpolation * Time.deltaTime);
+        interpolation = 0f;
+
+        while (interpolation < interpolationTarget)
+        {
+            scarecrowSr.gameObject.transform.localScale = Vector3.Lerp(scarecrowSr.gameObject.transform.localScale, new Vector3(1, 1, 1), (interpolation / interpolationTarget));
+            interpolation += 1 * Time.deltaTime;
+            yield return null;
+        }
 
         yield return new WaitForSeconds(1.0f);
 
-        gravestoneSr.gameObject.transform.localScale = Vector3.Lerp(gravestoneSr.gameObject.transform.localScale, new Vector3(1, 1, 1), interpolation * Time.deltaTime);
+        interpolation = 0f;
 
+        while (interpolation < interpolationTarget)
+        {
+            gravestoneSr.gameObject.transform.localScale = Vector3.Lerp(gravestoneSr.gameObject.transform.localScale, new Vector3(1, 1, 1), (interpolation / interpolationTarget));
+            interpolation += 1 * Time.deltaTime;
+            yield return null;
+        }
     }
 
 }
