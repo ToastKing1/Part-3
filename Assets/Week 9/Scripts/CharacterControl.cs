@@ -8,10 +8,14 @@ using UnityEngine;
 public class CharacterControl : MonoBehaviour
 {
     public static TextMeshProUGUI villagerTypeText;
+    public Canvas canvas;
+
+    public List<Villager> villagers;
 
     public void Start()
     {
-        villagerTypeText = FindObjectOfType<TextMeshProUGUI>();
+       // villagerTypeText = FindFirstObjectByType<TextMeshProUGUI>();
+       villagerTypeText = canvas.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     public static Villager SelectedVillager { get; private set; }
@@ -25,6 +29,11 @@ public class CharacterControl : MonoBehaviour
         SelectedVillager = villager;
         villagerTypeText.text = SelectedVillager.GetType().Name;
         SelectedVillager.Selected(true);
+    }
+
+    public void ChangeVillagerSelection(int villagerNumber)
+    {
+        SetSelectedVillager(villagers[villagerNumber]);
     }
     
 }
