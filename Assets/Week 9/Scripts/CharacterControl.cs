@@ -35,5 +35,10 @@ public class CharacterControl : MonoBehaviour
     {
         SetSelectedVillager(villagers[villagerNumber]);
     }
+
+    public void ChangeVillagerScale(float scale)
+    {
+        SelectedVillager.gameObject.transform.localScale = new Vector3 (scale, scale, scale);
+    }
     
 }
