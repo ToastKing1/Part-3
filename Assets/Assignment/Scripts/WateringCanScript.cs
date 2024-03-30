@@ -40,6 +40,7 @@ public class WateringCanScript : MonoBehaviour
                 currentElement = ElementalType.Fire;
                 currentSprite.sprite = fireIcon;
             }
+            Debug.Log(currentElement);
         }
     }
 }

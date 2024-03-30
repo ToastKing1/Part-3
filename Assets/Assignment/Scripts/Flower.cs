@@ -8,6 +8,7 @@ public class Flower : MonoBehaviour
     public WateringCanScript WateringCan;
     public float size;
     public bool finished = false;
+    static Sprite finishedSprite;
     public SpriteRenderer sr;
     bool growing = false;
 
@@ -40,31 +41,55 @@ public class Flower : MonoBehaviour
     {
         
         if (growing == true || finished) { return; }
+        Debug.Log(WateringCan.currentElement);
         if (CheckType() == WateringCan.currentElement)
         {
-            StartCoroutine(Watered());
+            StartCoroutine(Watered(true));
+        }
+        else
+        {
+            StartCoroutine(Watered(false));
         }
         
     }
 
-    IEnumerator Watered()
+    IEnumerator Watered(bool isCorrectElement)
     {
         growing = true;
         float timer = 0f;
-        while (timer < 2f)
+        if (isCorrectElement)
         {
-            Debug.Log(timer);
-            if (size > 5)
+            while (timer < 2f)
             {
-                growing = false;
-                finished = true;
+                if (size > 5)
+                {
+                    growing = false;
+                    finished = true;
+                    Finished();
+                    yield return null;
+                    break;
+                }
+                timer += Time.deltaTime;
+                size += Time.deltaTime;
+                sr.transform.localScale = new Vector3(size, size, 1);
                 yield return null;
-                break;
             }
-            timer += Time.deltaTime;
-            size += Time.deltaTime;
-            sr.transform.localScale = new Vector3(size, size, 1);
-            yield return null;
+        }
+        else
+        {
+            while (timer < 1f)
+            {
+                if (size < 0.5)
+                {
+                    growing = false;
+                    yield return null;
+                    break;
+                }
+                timer += Time.deltaTime;
+                size -= Time.deltaTime;
+                sr.transform.localScale = new Vector3(size, size, 1);
+                yield return null;
+            }
         }
         growing = false;
         
@@ -74,6 +99,11 @@ public class Flower : MonoBehaviour
     {
         // the type will be replaced regardless, therefore I used fire as a default type
         return ElementalType.Fire;
+    }
+
+    static void Finished()
+    {
+        Instantiate(finishedSprite, sr.transform.position);
     }
 
 }
