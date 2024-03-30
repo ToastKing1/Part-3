@@ -8,15 +8,15 @@ public class Flower : MonoBehaviour
     public WateringCanScript WateringCan;
     public float size;
     public bool finished = false;
-    static Sprite finishedSprite;
+    public GameObject finishedSprite;
     public SpriteRenderer sr;
-    bool growing = false;
+    static bool growing = false;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        size = Random.Range(0.5f, 2.0f);
+        size = Random.Range(1f, 2.0f);
         sr.transform.localScale = new Vector3(size, size, 1);
     }
 
@@ -25,9 +25,9 @@ public class Flower : MonoBehaviour
     {
         if (finished) return;
         if (growing) return;
-        if (size <= 0.5f)
+        if (size <= 1f)
         {
-            size = 0.5f;
+            size = 1f;
             return;
         }
         else
@@ -64,7 +64,6 @@ public class Flower : MonoBehaviour
                 if (size > 5)
                 {
                     growing = false;
-                    finished = true;
                     Finished();
                     yield return null;
                     break;
@@ -79,7 +78,7 @@ public class Flower : MonoBehaviour
         {
             while (timer < 1f)
             {
-                if (size < 0.5)
+                if (size < 1f)
                 {
                     growing = false;
                     yield return null;
@@ -101,9 +100,10 @@ public class Flower : MonoBehaviour
         return ElementalType.Fire;
     }
 
-    static void Finished()
+    void Finished()
     {
-        Instantiate(finishedSprite, sr.transform.position);
+        finished = true;
+        Instantiate(finishedSprite, sr.transform);
     }
 
 }
