@@ -23,6 +23,7 @@ public class Flower : MonoBehaviour
     void Update()
     {
         if (finished) return;
+        if (growing) return;
         if (size <= 0.5f)
         {
             size = 0.5f;
@@ -30,22 +31,42 @@ public class Flower : MonoBehaviour
         }
         else
         {
-            if (!growing)
-            {
-                size -= 0.1f * Time.deltaTime;
-            }
+            size -= 0.1f * Time.deltaTime;
         }
         sr.transform.localScale = new Vector3(size, size, 1);
     }
 
     void OnMouseDown()
     {
-        Debug.Log("pressed");
-        if (growing == true) { return; }
+        
+        if (growing == true || finished) { return; }
         if (CheckType() == WateringCan.currentElement)
         {
-            Debug.Log("It works");
+            StartCoroutine(Watered());
         }
+        
+    }
+
+    IEnumerator Watered()
+    {
+        growing = true;
+        float timer = 0f;
+        while (timer < 2f)
+        {
+            Debug.Log(timer);
+            if (size > 5)
+            {
+                growing = false;
+                finished = true;
+                yield return null;
+                break;
+            }
+            timer += Time.deltaTime;
+            size += Time.deltaTime;
+            sr.transform.localScale = new Vector3(size, size, 1);
+            yield return null;
+        }
+        growing = false;
         
     }
 
