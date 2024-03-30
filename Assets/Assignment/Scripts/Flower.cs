@@ -5,10 +5,11 @@ using UnityEngine.UIElements;
 
 public class Flower : MonoBehaviour
 {
-    public GameObject WateringCan;
+    public WateringCanScript WateringCan;
     public float size;
-    public bool finished;
+    public bool finished = false;
     public SpriteRenderer sr;
+    bool growing = false;
 
 
     // Start is called before the first frame update
@@ -27,11 +28,31 @@ public class Flower : MonoBehaviour
             size = 0.5f;
             return;
         }
-        size -= 0.5f * Time.deltaTime;
+        else
+        {
+            if (!growing)
+            {
+                size -= 0.1f * Time.deltaTime;
+            }
+        }
+        sr.transform.localScale = new Vector3(size, size, 1);
     }
 
-    void MousePressed()
+    void OnMouseDown()
     {
+        Debug.Log("pressed");
+        if (growing == true) { return; }
+        if (CheckType() == WateringCan.currentElement)
+        {
+            Debug.Log("It works");
+        }
         
     }
+
+    public virtual ElementalType CheckType()
+    {
+        // the type will be replaced regardless, therefore I used fire as a default type
+        return ElementalType.Fire;
+    }
+
 }
