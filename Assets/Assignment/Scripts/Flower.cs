@@ -45,10 +45,12 @@ public class Flower : MonoBehaviour
         if (CheckType() == WateringCan.currentElement)
         {
             StartCoroutine(Watered(true));
+            
         }
         else
         {
             StartCoroutine(Watered(false));
+            
         }
         
     }
@@ -73,6 +75,7 @@ public class Flower : MonoBehaviour
                 sr.transform.localScale = new Vector3(size, size, 1);
                 yield return null;
             }
+            growing = false;
         }
         else
         {
@@ -89,9 +92,9 @@ public class Flower : MonoBehaviour
                 sr.transform.localScale = new Vector3(size, size, 1);
                 yield return null;
             }
+            growing = false;
         }
-        growing = false;
-        
+
     }
 
     public virtual ElementalType CheckType()
