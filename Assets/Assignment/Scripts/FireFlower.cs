@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class FireFlower : Flower
 {
+    // the finished sprite that is unique to the flower
     public GameObject finishedSprite;
 
+    // this method returns what type the flower is
     public override ElementalType CheckType()
     {
         return ElementalType.Fire;
     }
 
+    // this method sets the flower finish, instances the finished sprite
+    // and it sets the flowerFinished count higher
     protected override void Finished()
     {
         finished = true;

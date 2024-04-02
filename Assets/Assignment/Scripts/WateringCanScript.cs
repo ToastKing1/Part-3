@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// all the different elements are put into an enumerator
 public enum ElementalType
 {
     Fire,
@@ -11,8 +12,12 @@ public enum ElementalType
 
 public class WateringCanScript : MonoBehaviour
 {
+    // the spriterenderer that will swap sprite depending on the element
     public SpriteRenderer currentSprite;
+    // the current element
     public ElementalType currentElement;
+
+    // the three different elements
     public Sprite fireIcon;
     public Sprite waterIcon;
     public Sprite earthIcon;
@@ -23,6 +28,7 @@ public class WateringCanScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // if the player presses "T", the elements swap depending on what is the current element
         if (Input.GetKeyDown(KeyCode.T))
         {
             if (currentElement == ElementalType.Fire)
@@ -40,7 +46,6 @@ public class WateringCanScript : MonoBehaviour
                 currentElement = ElementalType.Fire;
                 currentSprite.sprite = fireIcon;
             }
-            Debug.Log(currentElement);
         }
     }
 }
