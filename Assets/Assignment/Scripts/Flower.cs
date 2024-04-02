@@ -8,7 +8,6 @@ public class Flower : MonoBehaviour
     public WateringCanScript WateringCan;
     public float size;
     public bool finished = false;
-    public GameObject finishedSprite;
     public SpriteRenderer sr;
     static bool growing = false;
 
@@ -41,7 +40,6 @@ public class Flower : MonoBehaviour
     {
         
         if (growing == true || finished) { return; }
-        Debug.Log(WateringCan.currentElement);
         if (CheckType() == WateringCan.currentElement)
         {
             StartCoroutine(Watered(true));
@@ -103,10 +101,9 @@ public class Flower : MonoBehaviour
         return ElementalType.Fire;
     }
 
-    void Finished()
+    protected virtual void Finished()
     {
         finished = true;
-        Instantiate(finishedSprite, sr.transform);
     }
 
 }
